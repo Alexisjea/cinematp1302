@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="fragments/header :: header-css (title='Films')"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header-nav"/>
+
+<main class="container">
+  <h1 th:text="#{the.films(${#lists.size(films)})}">Les films</h1>
+  <div th:each="film, iter : ${films}" class="card" style="width: 142px; display: inline-block"th:with="username=${session!=null and session.user!=null} ? ${session.user.userName} : ''">
+    <img src="..." th:src="'images/affiches/'+ ${film.afficheNom}" class="card-img-top" height="200" width="142"
+         alt="...">
+    <div class="card-body">
+      <h5 class="card-title" th:text="${film.titre}">Card title</h5>
+      <p th:text="'note : ' + ${#numbers.formatDecimal(film.note,3,1)}"></p>
+      <a th:href="@{'/film/'+${iter.index}}" class="btn btn-primary" th:text="#{more}">vue détail</a>
+      <hr>
+      <a href="#" th:href="@{'/film/like/' +${iter.index} + '?like=true'}" class="btn btn-primary fas fa-thumbs-up"></a>
+
+      <a href="#" th:href="@{'/film/like/' +${iter.index} + '?like=false'}"class="btn btn-primary fas fa-thumbs-down"></a>
+      <p th:text=" 'Nb votes : ' + ${#lists.size(film.votes)}"></p>
+      <p th:text="'username is : '+ ${username}"></p>
+
+
+    </div>
+  </div>
+
+
+</main>
+
+<div th:replace="fragments/footer:: footer"/>
+</body>
+</html>

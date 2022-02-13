@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="fragments/header :: header-css (title='Films')"/>
+</head>
+<body>
+<div th:replace="fragments/header :: header-nav"/>
+
+<main class="container row d-flex justify-content-center">
+  <h1 th:text="${film.titre}" class="text-center">Le titre du film</h1>
+
+
+  <div class="card " style="width: 60%;">
+    <img src="..." th:src="'/images/affiches/'+ ${film.afficheNom}" class="card-img-top"
+         th:alt="#{film.title}" alt="">
+    <div class="card-body d-flex-justify-content-center">
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingFour">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Titre
+            </button>
+          </h2>
+          <div id="collapseFour" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <h5 class="card-title" th:text="${film.titre}">Card title</h5>
+
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <p th:text=" 'Nb acteurs : ' + ${#lists.size(film.acteurs)}"></p>
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show row" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body d-flex justify-content-evenly">
+              <div th:each="role : ${film.acteurs}" style="display: flex ; width: 30%" class="flex-column row">
+              <img src="..." th:src="'/images/photos/'+ ${role.acteur.photo}" class="w-100 justifiy-content-space-between;"
+                   alt="">
+                <p th:text="${role.name}"></p>
+
+
+            </div>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Note
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p th:text="'note : ' + ${#numbers.formatDecimal(film.note,2,1)}"></p>
+
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Résumé
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body"><p class="card-text" th:text="${film.resume}"></p>
+
+            </div>
+          </div>
+        </div>
+
+
+
+    </div>
+    </div>
+  </div>
+</main>
+
+<div th:replace="fragments/footer:: footer"/>
+</body>
+</html>
